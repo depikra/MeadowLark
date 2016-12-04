@@ -1,15 +1,10 @@
 var express = require ('express');
+var fortune = require ('./lib/fortune.js');
+
+//=========================================================
+
 var app = express ();
 app.set ('port', process.env.PORT || 3000);
-
-
-var fortunes = [
-    "Победи свои страхи, или они победят тебя.",
-    "Рекам нужны истоки.",
-    "Не бойся неведомого.",
-    "Тебя ждет приятный сюрприз.",
-    "Будь проще везде, где только можно."
-];
 
 // using a public dir for static files
 app.use(express.static(__dirname + '/public'));
@@ -18,9 +13,7 @@ app.get ('/', function(req, res) {
     res.render ('home');
 });
 app.get ('/about', function(req, res) {
-    var randomFortune =
-    fortunes[Math.floor(Math.random() * fortunes.length)];
-    res.render ('about', {fortune: randomFortune});
+    res.render ('about', { fortune: getFortune() });
 });
 
 // пользовательская страница 404
